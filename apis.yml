@@ -1,6 +1,10 @@
 aid: serpwow
 name: SerpWow
-description: "SerpWow accurately returns all data on the Google Trends page including Related Topics (topics that were searched by other users, when searching for the specified search query) and Related Queries (other search phrases that were searched by users that have also searched for the specified search query).\_ "
+description: >-
+  SerpWow accurately returns all data on the Google Trends page including Related
+  Topics (topics that were searched by other users, when searching for the specified
+  search query) and Related Queries (other search phrases that were searched by users
+  that have also searched for the specified search query).
 type: Index
 position: Consumer
 access: 3rd-Party
@@ -15,7 +19,11 @@ specificationVersion: '0.19'
 apis:
   - aid: serpwow:serpwow
     name: SerpWow
-    description: "SerpWow accurately returns all data on the Google Trends page including Related Topics (topics that were searched by other users, when searching for the specified search query) and Related Queries (other search phrases that were searched by users that have also searched for the specified search query).\_ "
+    description: >-
+      SerpWow accurately returns all data on the Google Trends page including Related
+      Topics (topics that were searched by other users, when searching for the specified
+      search query) and Related Queries (other search phrases that were searched by
+      users that have also searched for the specified search query).
     humanURL: ' https://trajectdata.com/discover-serp-wow-api/'
     tags:
       - API
