@@ -15,6 +15,9 @@ modified: '2026-03-16'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/serpwow/refs/heads/main/apis.yml
 specificationVersion: '0.19'
+common:
+  - type: GitHubOrganization
+    url: https://github.com/serpwow
 apis:
   - aid: serpwow:serpwow
     name: SerpWow
