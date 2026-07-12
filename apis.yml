@@ -16,6 +16,10 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/serpwow/refs/heads/main/apis.yml
 specificationVersion: '0.19'
 common:
+  - type: DomainSecurity
+    url: security/serpwow-domain-security.yml
+  - type: Authentication
+    url: authentication/serpwow-authentication.yml
   - type: GitHubOrganization
     url: https://github.com/serpwow
 apis:

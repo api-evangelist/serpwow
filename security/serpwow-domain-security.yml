@@ -1,0 +1,27 @@
+generated: '2026-07-11'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: trajectdata.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Sep 10 20:33:31 2026 GMT
+  hsts: false
+- host: api.serpwow.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Aug 10 21:17:55 2026 GMT
+  hsts: null
+domains:
+- domain: trajectdata.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: serpwow.com
+  dnssec: false
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: none
