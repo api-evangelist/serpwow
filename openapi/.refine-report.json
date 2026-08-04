@@ -1,0 +1,14 @@
+{
+  "provider": "serpwow",
+  "sources": [
+    "serpwow-search-api-openapi.yml"
+  ],
+  "outputs": [
+    "serpwow-search-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
