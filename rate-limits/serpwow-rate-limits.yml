@@ -3,85 +3,156 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: SerpWow
 providerId: serpwow
+generated: '2026-08-27'
+method: searched
+source: https://docs.trajectdata.com/serpwow/locations-api/overview
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-08-27'
 tags:
   - Rate Limiting
   - Quotas
   - Throttling
-description: Machine-readable rate limit definitions for the SerpWow API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
+description: >-
+  Published SerpWow limits, read from the provider's documentation on 2026-08-27 and checked
+  against live responses. Replaces the 2026-05-04 scaffold, which invented per-minute tiers and
+  X-RateLimit-* headers that SerpWow does not actually publish or return. The honest picture is
+  that SerpWow meters on a monthly CREDIT quota rather than a request rate: exactly one numeric
+  per-minute rate limit is published anywhere in the docs, and no rate-limit response headers
+  were observed.
+limit_count: 6
 headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
+  limit: null
+  remaining: null
+  reset: null
+  retryAfter: null
+  policy: null
+  observed: none
+  probe:
+    url: https://api.serpwow.com/live/search?q=test
+    http_status: 401
+    fetched: '2026-08-27'
+    note: >-
+      Response carried x-trace-id, x-frame-options, x-content-type-options, referrer-policy,
+      content-security-policy, cache-control and etag — no X-RateLimit-*, RateLimit-* or
+      Retry-After header. An agent cannot read remaining budget from the response.
 responseCodes:
   throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
+  quotaExceeded: 402
+  parsingIncident: 503
+  note: >-
+    429 is returned when a plan-level or endpoint-level rate limit is hit. Credit exhaustion
+    returns 402 Payment Required, not 429. 503 signals an active parsing incident and carries a
+    retry_after value in the JSON body (published example: 3600).
 limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
+  - name: Locations API rate limit
+    scope: account
     metric: requests_per_minute
-    limit: 10
-    burst: 20
+    limit: 120
     timeFrame: minute
     applies:
-      - SerpWow
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
+      - Locations API
+    published: true
+    source: https://docs.trajectdata.com/serpwow/locations-api/overview
+    quote: >-
+      "to guarantee quality of service to all customers, we do apply a rate limit of 120
+      requests per minute"
+  - name: Starter monthly credit allowance
+    scope: account
+    type: quota
+    metric: credits_per_month
+    limit: 10000
     timeFrame: month
-    applies:
-      - SerpWow
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
+    tier: Starter
+    published: true
+    source: https://trajectdata.com/serp/serp-wow-api/
+  - name: BigData monthly credit allowance
+    scope: account
+    type: quota
+    metric: credits_per_month
+    limit: 50000
+    timeFrame: month
+    tier: BigData
+    published: true
+    source: https://trajectdata.com/serp/serp-wow-api/
+  - name: Volume monthly credit allowance
+    scope: account
+    type: quota
+    metric: credits_per_month
+    limit: 250000
+    timeFrame: month
+    tier: Volume
+    published: true
+    source: https://trajectdata.com/serp/serp-wow-api/
+  - name: Infrastructure monthly credit allowance
+    scope: account
+    type: quota
+    metric: credits_per_month
+    limit: 1000000
+    timeFrame: month
+    tier: Infrastructure
+    published: true
+    source: https://trajectdata.com/serp/serp-wow-api/
+  - name: Infrastructure XL monthly credit allowance
+    scope: account
+    type: quota
+    metric: credits_per_month
+    limit: 5000000
+    timeFrame: month
+    tier: Infrastructure XL
+    published: true
+    source: https://trajectdata.com/serp/serp-wow-api/
+undocumented:
+  - surface: Search API
+    note: >-
+      The response-code reference says "If you are on a Plan with a rate limit, or making a call
+      on an endpoint that is rate-limited" — acknowledging that plan-level rate limits exist,
+      but no numeric per-second/per-minute value or concurrency ceiling is published for any
+      tier. This is a genuine gap, not an absence of limits.
+    source: https://docs.trajectdata.com/serpwow/response-codes
+quotas:
+  - name: Monthly credit allowance
+    scope: account
+    metric: credits_per_month
+    varies_by_plan: true
+    values:
+      Starter: 10000
+      BigData: 50000
+      Volume: 250000
+      Infrastructure: 1000000
+      Infrastructure XL: 5000000
+    overage: enabled per account, billed at the tier's per-credit rate
+    source: https://trajectdata.com/serp/serp-wow-api/
+    cross_ref: plans/serpwow-plans-pricing.yml
+structural_limits:
+  - resource: Batches per account
+    limit: 10000
+    source: https://docs.trajectdata.com/serpwow/batches-api/limits
+  - resource: Searches per Batch
+    limit: 15000
+    condition: include_html=false
+    source: https://docs.trajectdata.com/serpwow/batches-api/limits
+  - resource: Searches per Batch
     limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - SerpWow
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - SerpWow
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
+    condition: include_html=true
+    source: https://docs.trajectdata.com/serpwow/batches-api/limits
+  - resource: Searches added per API request
     limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - SerpWow
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+    source: https://docs.trajectdata.com/serpwow/batches-api/limits
+  - resource: Searches added per bulk CSV upload
+    limit: 15000
+    source: https://docs.trajectdata.com/serpwow/batches-api/limits
+  - resource: max_page (automatic pagination) in Batches
+    limit: 20
+    source: https://docs.trajectdata.com/serpwow/batches-api/limits
+  - resource: max_page (automatic pagination) in real-time searches
+    limit: 5
+    source: https://docs.trajectdata.com/serpwow/wdKjorsUBhVLnAM71RIpO
+  - resource: Destinations per account
+    limit: 50
+    source: https://docs.trajectdata.com/serpwow/destinations-api/overview
+  - resource: Webhook receiver response timeout
+    limit: 5
+    unit: seconds
+    retries: 5
+    backoff: exponential
+    source: https://docs.trajectdata.com/serpwow/batches-api/batches/webhook

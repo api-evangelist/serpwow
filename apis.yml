@@ -1,63 +1,173 @@
 aid: serpwow
 name: SerpWow
 description: >-
-  SerpWow accurately returns all data on the Google Trends page including Related
-  Topics (topics that were searched by other users, when searching for the specified
-  search query) and Related Queries (other search phrases that were searched by users
-  that have also searched for the specified search query).
+  SerpWow is a real-time SERP (search engine results page) API from Traject Data. A single
+  GET request to https://api.serpwow.com/live returns clean, structured JSON, HTML or CSV
+  results from Google, Bing, Yahoo, Baidu, Yandex, Naver, Amazon or eBay, with fine-grained
+  control over location (down to ZIP/postal code), device (desktop, tablet, mobile), language,
+  country and result type — organic search, Maps places and reviews, Shopping, Product,
+  News, Images, Videos, Scholar, Trends, Autocomplete, Reverse Image and Google AI Overviews.
+  Alongside the real-time Search API, SerpWow ships a Batches API for scheduling up to 15,000
+  searches at a time with webhook or object-storage delivery, a free Locations API, a
+  Destinations API that pushes result sets to S3, Google Cloud Storage, Azure Blob or any
+  S3-compatible store, an Error Logs API, and an Account API for credit and platform-status
+  telemetry. Billing is metered in credits with published per-tier overage rates, and requests
+  that do not return HTTP 200 are not charged.
 type: Index
 accessModel:
-  pricing: freemium
+  pricing: paid
   onboarding: self-serve
-  trial: false
+  trial: true
   try_now: true
   public: false
-  label: Freemium · Self-serve signup
+  label: Paid plans · Self-serve signup · Free trial
   confidence: high
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
-  method: derived
+  - sandbox
+  generated: '2026-08-27'
+  method: searched
 position: Consumer
 access: 3rd-Party
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/serpwow.png
-tags: []
+tags:
+- Search
+- SERP
+- Web Data
+- Scraping
+- SEO
+- Search Engine
+- Google
+- E-Commerce
+- Market Intelligence
+- Data Extraction
 created: '2025-01-07'
-modified: '2026-03-16'
+modified: '2026-08-27'
 url: >-
   https://raw.githubusercontent.com/api-evangelist/serpwow/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 common:
-  - type: AgenticAccess
-    url: agentic-access/serpwow-agentic-access.yml
-  - type: DomainSecurity
-    url: security/serpwow-domain-security.yml
-  - type: Authentication
-    url: authentication/serpwow-authentication.yml
-  - type: GitHubOrganization
-    url: https://github.com/serpwow
+- type: Website
+  url: https://serpwow.com/
+- type: DeveloperPortal
+  url: https://docs.trajectdata.com/serpwow
+- type: Documentation
+  url: https://docs.trajectdata.com/serpwow/search-api/overview
+- type: APIReference
+  url: https://docs.trajectdata.com/serpwow/search-api/searches/common
+- type: GettingStarted
+  url: https://docs.trajectdata.com/serpwow/search-api/getting-started/send-requests
+- type: Support
+  url: https://trajectdata.com/contact-us/
+- type: Blog
+  url: https://trajectdata.com/blog/
+- type: Pricing
+  url: https://trajectdata.com/serp/serp-wow-api/
+- type: SignUp
+  url: https://app.serpwow.com/signup
+- type: TermsOfService
+  url: https://trajectdata.com/traject-data-terms-of-service/
+- type: PrivacyPolicy
+  url: https://trajectdata.com/privacy-policy/
+- type: Compliance
+  url: https://trajectdata.com/gdpr/
+- type: StatusPage
+  url: https://serpwow.statuspage.io/
+- type: ChangeLog
+  url: changelog/serpwow-changelog.yml
+- type: Postman
+  url: https://www.postman.com/cyfebytraject/traject-data-apis/collection/5cd4b562-7a19-47be-ad54-c0e7d38e6579/serpwow-api
+- type: AgenticAccess
+  url: agentic-access/serpwow-agentic-access.yml
+- type: DomainSecurity
+  url: security/serpwow-domain-security.yml
+- type: Authentication
+  url: authentication/serpwow-authentication.yml
+- type: Packages
+  url: packages/serpwow-packages.yml
+- type: SDKs
+  url: packages/serpwow-packages.yml
+- type: LLMsTxt
+  url: llms/serpwow-llms.txt
+- type: MCPServer
+  url: mcp/serpwow-mcp.yml
+- type: Conventions
+  url: conventions/serpwow-conventions.yml
+- type: ErrorCatalog
+  url: errors/serpwow-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/serpwow-lifecycle.yml
+- type: Conformance
+  url: conformance/serpwow-conformance.yml
+- type: Sandbox
+  url: sandbox/serpwow-sandbox.yml
+- type: DataModel
+  url: data-model/serpwow-data-model.yml
+- type: Webhooks
+  url: asyncapi/serpwow-batches-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Plans
+  url: plans/serpwow-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/serpwow-rate-limits.yml
 apis:
 - aid: serpwow:serpwow
   name: SerpWow
   description: >-
-    SerpWow accurately returns all data on the Google Trends page including Related Topics (topics that
-    were searched by other users, when searching for the specified search query) and Related Queries (other
-    search phrases that were searched by users that have also searched for the specified search query).
-  humanURL: ' https://trajectdata.com/discover-serp-wow-api/'
-  tags: []
+    The SerpWow platform — a real-time SERP API covering Google, Bing, Yahoo, Baidu, Yandex,
+    Naver, Amazon and eBay, plus a Batches API for scheduled bulk collection, a free Locations
+    API, a Destinations API for object-storage delivery, an Error Logs API and an Account API.
+  humanURL: https://trajectdata.com/serp/serp-wow-api/
+  baseURL: https://api.serpwow.com/live
+  tags:
+  - Search
+  - SERP
+  - Web Data
   properties:
   - type: Documentation
-    url: ' https://trajectdata.com/discover-serp-wow-api/'
+    url: https://docs.trajectdata.com/serpwow
+  - type: Overview
+    url: https://trajectdata.com/discover-serp-wow-api/
 - aid: serpwow:serpwow-search-api
   name: SerpWow Search API
-  description: The Search API from SerpWow — 6 operation(s) for search.
-  humanURL: ' https://trajectdata.com/discover-serp-wow-api/'
+  description: >-
+    The real-time Search API from SerpWow — GET /search, /places, /shopping, /news, /product and
+    /place_reviews against https://api.serpwow.com/live, authenticated with an api_key query
+    parameter and metered in credits.
+  humanURL: https://docs.trajectdata.com/serpwow/search-api/overview
+  baseURL: https://api.serpwow.com/live
   tags:
   - Search
   properties:
   - type: OpenAPI
     url: openapi/serpwow-search-api-openapi.yml
+  - type: Overlay
+    url: overlays/serpwow-search-api-overlay.yaml
+  - type: PostmanCollection
+    url: collections/serpwow-search-api.postman_collection.json
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
+x-provenance:
+  parent_company: Traject Data
+  note: >-
+    SerpWow is a Traject Data product; Traject Data joined ScraperAPI (announced on
+    trajectdata.com and at
+    https://www.scraperapi.com/blog/scraperapi-traject-data-acquisition/). The marketing site
+    serpwow.com serves the Traject Data SerpWow product page for every path, and the
+    documentation is hosted under docs.trajectdata.com/serpwow.
+  removed_pointers:
+  - type: GitHubOrganization
+    url: https://github.com/serpwow
+    reason: >-
+      Confirmed dead 2026-08-27 — https://github.com/serpwow returns HTTP 404, as do all three
+      SDK repositories it used to hold (google-search-results-nodejs, google-search-results-python,
+      google-search-results-php). The published npm/PyPI/Packagist packages still declare those
+      repositories. Removed rather than left as a false claim on the provider's behalf.
+x-enrichment:
+  date: '2026-08-27'
+  status: enriched
+  artifacts_added: 17
+  pass: local-v1

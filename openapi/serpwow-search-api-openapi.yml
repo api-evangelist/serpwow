@@ -1,4 +1,4 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
   title: SerpWow Search API
   description: 'SerpWow is a real-time SERP (search engine results page) API supporting

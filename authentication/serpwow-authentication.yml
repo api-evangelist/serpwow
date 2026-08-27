@@ -1,15 +1,76 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/serpwow-openapi.yml
+generated: '2026-08-27'
+method: searched
+source: openapi/serpwow-search-api-openapi.yml
+docs: https://docs.trajectdata.com/serpwow/search-api/searches/common
+description: >-
+  SerpWow authenticates every request with a single `api_key` query-string parameter. There is no
+  header-based alternative, no OAuth, no OIDC and no scope model — the key is the whole
+  authorization surface, and it carries full account authority including the Batches and
+  Destinations write operations.
 summary:
   types:
   - apiKey
   api_key_in:
   - query
+  oauth2: false
+  openid_connect: false
+  mutual_tls: false
+  scopes: false
 schemes:
 - name: apiKeyAuth
   type: apiKey
   in: query
   parameter: api_key
+  required: true
+  applies_to:
+  - Search API
+  - Account API
+  - Batches API
+  - Locations API
+  - Destinations API
+  - Error Logs API
   sources:
-  - openapi/serpwow-openapi.yml
+  - openapi/serpwow-search-api-openapi.yml
+  - https://docs.trajectdata.com/serpwow/search-api/searches/common
+  docs_quote: 'api_key | required | The API key for your SerpWow account.'
+key_management:
+  issuance: https://app.serpwow.com/signup
+  dashboard: https://app.serpwow.com/
+  rotation_documented: false
+  multiple_keys_documented: false
+  prefix_scheme: none
+  observed_format: 32-character uppercase hexadecimal
+  observed_format_note: >-
+    Inferred from the provider's own published request examples; the docs do not state a key
+    format contract, so do not validate against it.
+  demo_key: demo
+  demo_key_note: >-
+    A working, publicly documented demo key. See sandbox/serpwow-sandbox.yml — verified live on
+    2026-08-27 against https://api.serpwow.com/live/account.
+verified:
+- url: https://api.serpwow.com/live/search?q=test
+  http_status: 401
+  body: '{"request_info":{"success":false,"message":"Supplied api_key is not valid"}}'
+  fetched: '2026-08-27'
+  note: A missing or invalid key returns 401 with the standard error envelope.
+- url: https://api.serpwow.com/live/account?api_key=demo
+  http_status: 200
+  fetched: '2026-08-27'
+  note: The published demo key authenticates successfully.
+risks:
+- id: key-in-url
+  description: >-
+    Because the credential travels in the query string it is written into browser history, proxy
+    logs, CDN logs and server access logs by default. Anything that logs full request URLs will
+    capture the key.
+  mitigation: >-
+    Terminate SerpWow calls server-side, redact `api_key` from request logging, and never place
+    the key in a client-side request.
+- id: no-scopes
+  description: >-
+    One key grants every capability, including deleting Batches and Destinations. There is no way
+    to issue a read-only credential for a search-only integration.
+- id: no-documented-rotation
+  description: >-
+    No key rotation or multi-key procedure is documented, so there is no published path to roll a
+    leaked key without an interruption.

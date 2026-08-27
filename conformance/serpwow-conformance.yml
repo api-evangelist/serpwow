@@ -1,0 +1,79 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/serpwow-search-api-openapi.yml, https://docs.trajectdata.com/serpwow/response-codes
+description: >-
+  Cross-cutting standards conformance for the SerpWow API. SerpWow is a web-data / SERP
+  extraction API; that market has no adopted domain interchange standard (no SCIM, OData,
+  OpenRTB, FHIR, HL7, ISO 20022 or equivalent applies), so the domain-standard slot is
+  legitimately empty rather than failed.
+standards:
+  - id: openapi-3
+    conforms: true
+    evidence: openapi/serpwow-search-api-openapi.yml declares openapi 3.2.0 with paths and components.securitySchemes
+  - id: oauth2
+    conforms: false
+    evidence: No oauth2 securityScheme in the spec and no OAuth flow documented; auth is a single api_key query parameter.
+  - id: oidc
+    conforms: false
+    evidence: /.well-known/openid-configuration returns 404 on api.serpwow.com (probed 2026-08-27).
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      Errors return application/json with a vendor request_info{success,message} envelope, not
+      application/problem+json. Verified on a live 401 response 2026-08-27.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: /.well-known/security.txt is not served on any SerpWow or Traject Data host.
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation response header observed; deprecations are announced in
+      documentation titles and the Product Updates page instead.
+  - id: asyncapi
+    conforms: false
+    evidence: No AsyncAPI document published; the batch-completion webhook is documented in prose only.
+  - id: json-api
+    conforms: false
+    evidence: Responses are a bespoke JSON shape, not application/vnd.api+json.
+  - id: pagination
+    conforms: true
+    evidence: >-
+      Documented page-number pagination with page/max_page/next_page_token and a pagination
+      object in the response. See https://docs.trajectdata.com/serpwow/wdKjorsUBhVLnAM71RIpO
+  - id: idempotency
+    conforms: false
+    evidence: No Idempotency-Key header or replay-protection mechanism documented on the Batches write surface.
+  - id: rate-limit-headers
+    conforms: false
+    evidence: >-
+      No X-RateLimit-*, RateLimit-* or Retry-After header observed on live responses
+      (probed 2026-08-27); the 503 incident response carries retry_after in the body.
+  - id: cors
+    conforms: true
+    evidence: >-
+      Live responses carry Vary: Origin, Access-Control-Allow-Credentials and
+      Access-Control-Expose-Headers: X-Trace-ID (observed 2026-08-27).
+  - id: gdpr
+    conforms: true
+    evidence: >-
+      Traject Data publishes a GDPR compliance statement at https://trajectdata.com/gdpr/
+      (HTTP 200, last updated 1 February 2020) describing its data-collection review and the
+      measures implemented for GDPR compliance.
+domain_standard:
+  applicable: false
+  note: >-
+    Search-engine results extraction has no published interchange standard. The provider's own
+    output formats (JSON, JSON Lines, CSV) and its Destinations integration (S3-compatible
+    object storage) are the closest thing to interoperability surfaces, and neither is a domain
+    standard in the sense the rubric rewards. Recording `applicable: false` rather than
+    inventing a conformance.
+certifications:
+  soc2: null
+  iso27001: null
+  pci: null
+  hipaa: null
+  fedramp: null
+  note: >-
+    No trust center and no named certification was found. Probed 2026-08-27:
+    https://trust.trajectdata.com/ 404, https://trajectdata.com/compliance/ 404,
+    https://trajectdata.com/soc2/ 404. The only published compliance artefact is the GDPR page.

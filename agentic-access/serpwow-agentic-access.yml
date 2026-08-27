@@ -1,6 +1,6 @@
 generated: '2026-07-15'
 method: generated
-source: openapi/serpwow-openapi.yml
+source: openapi/serpwow-search-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.

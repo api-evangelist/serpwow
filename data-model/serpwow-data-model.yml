@@ -1,0 +1,194 @@
+generated: '2026-08-27'
+method: derived
+source: >-
+  openapi/serpwow-search-api-openapi.yml plus the provider's object references at
+  https://docs.trajectdata.com/serpwow/batches-api/overview,
+  https://docs.trajectdata.com/serpwow/destinations-api/overview,
+  https://docs.trajectdata.com/serpwow/errorlogs-api/overview and
+  https://docs.trajectdata.com/serpwow/account-api
+description: >-
+  Entity-relationship graph for SerpWow. The repo's OpenAPI declares no components.schemas, so
+  the graph is derived from the documented resource surface and the example payloads the
+  provider publishes. Only entities and fields that appear in SerpWow's own documentation are
+  recorded.
+note: >-
+  SerpWow has two distinct halves. The Search / Locations half is stateless and read-only —
+  nothing is stored, and there are no identifiers to relate. The Batches / Destinations half is
+  a genuine stateful CRUD domain and is where the whole entity graph lives.
+entities:
+  - name: Account
+    stateful: false
+    identifier: api_key
+    docs: https://docs.trajectdata.com/serpwow/account-api
+    fields:
+      - name: api_key
+      - name: name
+      - name: email
+      - name: plan
+      - name: timezone
+      - name: credits_used
+      - name: credits_limit
+      - name: credits_remaining
+      - name: credits_reset_at
+      - name: destinations_used
+      - name: destinations_limit
+      - name: destinations_available
+      - name: batches_used
+      - name: batches_limit
+      - name: batches_available
+      - name: account_balance_usd
+      - name: overage_allowed
+      - name: overage_enabled
+      - name: overage_limit
+      - name: status
+        description: Array of {component, status} pairs — live platform health, in-band.
+      - name: usage_history
+        description: Per-month credit totals with a per-day breakdown, 3 months.
+  - name: Batch
+    stateful: true
+    identifier: id
+    id_format: 8-character uppercase hex (published example 9E867FAA)
+    docs: https://docs.trajectdata.com/serpwow/batches-api/overview
+    fields:
+      - name: id
+      - name: name
+      - name: priority
+        description: Higher-priority Batches start before lower-priority ones.
+      - name: schedule
+        description: monthly, weekly, daily, hourly or manual.
+      - name: notification_webhook
+      - name: notification_as_json
+      - name: notification_as_jsonlines
+      - name: notification_as_csv
+    operations:
+      - Create Batch
+      - Get Batch
+      - Update Batch
+      - Delete Batch
+      - List Batches
+      - Start Batch
+      - Stop Batch
+      - Stop All Batches
+  - name: Search
+    stateful: true
+    docs: https://docs.trajectdata.com/serpwow/batches-api/searches/create
+    description: >-
+      A stored collection of Search API parameters belonging to a Batch. Up to 15,000 per Batch.
+    operations:
+      - Create Searches
+      - List Searches
+      - Find Searches
+      - Update Search
+      - Delete Search
+      - Clear Searches
+  - name: ResultSet
+    stateful: true
+    identifier: id
+    id_format: integer, scoped to the Batch
+    docs: https://docs.trajectdata.com/serpwow/batches-api/results/list
+    fields:
+      - name: id
+      - name: started_at
+      - name: ended_at
+      - name: searches_completed
+      - name: searches_failed
+      - name: download_links.json.pages
+      - name: download_links.json.all_pages
+      - name: download_links.csv.pages
+      - name: download_links.csv.all_pages
+    retention_days: 14
+    operations:
+      - List Result Sets
+      - Get Result Set
+      - Resend Webhook
+  - name: Destination
+    stateful: true
+    docs: https://docs.trajectdata.com/serpwow/destinations-api/overview
+    description: >-
+      An object-storage target (Amazon S3, Google Cloud Storage, Azure Blob Storage, Alibaba
+      Cloud OSS or any S3-compatible store) that Batch Result Sets are pushed to automatically.
+    max_per_account: 50
+    operations:
+      - Create Destination
+      - List Destinations
+      - Update Destination
+      - Delete Destination
+  - name: ErrorLog
+    stateful: true
+    docs: https://docs.trajectdata.com/serpwow/errorlogs-api/overview
+    fields:
+      - name: count
+        description: Number of occurrences of the same error; increments on repeat and resets the retention timer.
+    retention_days: 3
+    scope: Real-time requests that returned HTTP 500 only.
+    operations:
+      - List Error Logs
+  - name: SearchResult
+    stateful: false
+    docs: https://docs.trajectdata.com/serpwow/search-api/overview
+    description: >-
+      The transient response of a real-time search. Not stored and not addressable by id.
+    fields:
+      - name: request_info.success
+      - name: request_info.message
+      - name: pagination
+      - name: position
+      - name: page
+      - name: position_overall
+  - name: Location
+    stateful: false
+    docs: https://docs.trajectdata.com/serpwow/locations-api/overview
+    description: >-
+      A canonical location string resolvable by the free Locations API and passed to the Search
+      API's `location` parameter.
+relationships:
+  - from: Account
+    to: Batch
+    type: has_many
+    via: api_key
+    note: Up to 10,000 Batches per account.
+  - from: Account
+    to: Destination
+    type: has_many
+    via: api_key
+    note: Up to 50 Destinations per account.
+  - from: Account
+    to: ErrorLog
+    type: has_many
+    via: api_key
+  - from: Batch
+    to: Search
+    type: has_many
+    via: batch id
+    note: Up to 15,000 Searches per Batch (100 when include_html=true).
+  - from: Batch
+    to: ResultSet
+    type: has_many
+    via: batch id
+    note: One Result Set per completed Batch run.
+  - from: Batch
+    to: Destination
+    type: has_many
+    via: destination reference on the Batch
+    note: A Batch can upload its Result Sets to one or more Destinations.
+  - from: ResultSet
+    to: Batch
+    type: belongs_to
+    via: batch id
+  - from: Search
+    to: Batch
+    type: belongs_to
+    via: batch id
+  - from: Search
+    to: Location
+    type: references
+    via: location parameter
+id_conventions:
+  - entity: Batch
+    format: 8-character uppercase alphanumeric
+    example_source: https://docs.trajectdata.com/serpwow/batches-api/batches/webhook
+  - entity: ResultSet
+    format: integer sequence within a Batch
+  - entity: Account
+    format: 32-character uppercase hexadecimal API key
+    note: Key format inferred from the published request examples; not stated as a contract.

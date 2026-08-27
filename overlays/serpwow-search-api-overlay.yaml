@@ -1,0 +1,91 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for SerpWow Search API
+  version: 1.0.0
+x-generated: '2026-08-27'
+x-method: generated
+x-source: >-
+  Derived from the provider's own documentation at https://docs.trajectdata.com/serpwow —
+  response-code reference, common parameters, pagination and status page. Never mutates
+  openapi/serpwow-search-api-openapi.yml.
+extends: openapi/serpwow-search-api-openapi.yml
+actions:
+  - target: $.info
+    update:
+      contact:
+        name: SerpWow Support
+        email: hello@serpwow.com
+        url: https://trajectdata.com/contact-us/
+      termsOfService: https://trajectdata.com/traject-data-terms-of-service/
+      x-apievangelist-docs: https://docs.trajectdata.com/serpwow
+      x-apievangelist-status-page: https://serpwow.statuspage.io/
+      x-apievangelist-changelog: https://docs.trajectdata.com/serpwow/product-updates
+      x-apievangelist-parent: >-
+        SerpWow is a Traject Data product; Traject Data joined ScraperAPI.
+  - target: $.info
+    update:
+      x-apievangelist-uncovered-apis:
+        - name: Batches API
+          docs: https://docs.trajectdata.com/serpwow/batches-api/overview
+        - name: Locations API
+          docs: https://docs.trajectdata.com/serpwow/locations-api/overview
+        - name: Destinations API
+          docs: https://docs.trajectdata.com/serpwow/destinations-api/overview
+        - name: Error Logs API
+          docs: https://docs.trajectdata.com/serpwow/errorlogs-api/overview
+        - name: Account API
+          docs: https://docs.trajectdata.com/serpwow/account-api
+  - target: $.components.securitySchemes.apiKeyAuth
+    update:
+      description: >-
+        SerpWow authenticates with an api_key query-string parameter on every request. The
+        documented demo key is `demo`. Sign up at https://app.serpwow.com/signup.
+  - target: $.paths./search.get
+    update:
+      x-apievangelist-error-catalog: errors/serpwow-error-codes.yml
+      x-apievangelist-pagination:
+        style: page-number
+        parameters: [page, max_page, next_page_token]
+        max_page_realtime: 5
+        docs: https://docs.trajectdata.com/serpwow/wdKjorsUBhVLnAM71RIpO
+      x-agentic-access:
+        action-class: connected
+        consequence: read
+  - target: $.paths./search.get.parameters
+    update:
+      - in: query
+        name: max_page
+        schema:
+          type: integer
+          maximum: 5
+        description: >-
+          Retrieve up to this many pages and concatenate them into one response. Maximum 5 for
+          real-time searches. Each page retrieved costs one credit.
+      - in: query
+        name: include_fields
+        schema:
+          type: string
+        description: Comma-separated JSON field names to include; dot notation supported.
+      - in: query
+        name: exclude_fields
+        schema:
+          type: string
+        description: Comma-separated JSON field names to exclude; dot notation supported.
+      - in: query
+        name: skip_on_incident
+        schema:
+          type: string
+        description: >-
+          Do not serve a response while a parsing incident is active for the requested result
+          type. Returns HTTP 503 with a retry_after value instead of unstable data.
+      - in: query
+        name: device
+        schema:
+          type: string
+          enum: [desktop, tablet, mobile]
+        description: Device profile used to fetch results. Defaults to desktop.
+      - in: query
+        name: include_html
+        schema:
+          type: boolean
+        description: Include raw SERP HTML in the response. Substantially increases payload size.

@@ -1,0 +1,137 @@
+generated: '2026-08-27'
+method: probed
+source: live HTTPS probes of every apis.yml and OpenAPI servers[] host, 2026-08-27
+description: >-
+  No /.well-known/ discovery document is served on any SerpWow or Traject Data host. Two hosts
+  answer HTTP 200 for every /.well-known/* path with a catch-all body rather than a document —
+  serpwow.com returns the same 322,170-byte marketing page for every path (including a control
+  path that does not exist), and app.serpwow.com returns the same 6,372-byte SPA shell. A third,
+  docs.trajectdata.com, returns a 15-byte {"status":"OK"} stub for any *.json path under
+  /.well-known/. None of these is a document, so no WellKnown or SecurityTxt pointer is emitted.
+hit_count: 0
+hosts:
+- host: https://api.serpwow.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://serpwow.com
+  soft_404_control:
+    path: /this-page-does-not-exist-xyz123/
+    status: 200
+    bytes: 322170
+    note: identical body (md5 9977ae2d45d77cc48c220a4cbd69d960) to / and to every /.well-known/* path
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    note: catch-all marketing HTML, not a document
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    note: catch-all marketing HTML, not a document
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: null
+    note: catch-all marketing HTML, not a document
+  - path: /.well-known/api-catalog
+    status: 200
+    file: null
+    note: catch-all marketing HTML, not a document
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: null
+    note: catch-all marketing HTML, not a document
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    note: catch-all marketing HTML, not an AgentCard
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    note: catch-all marketing HTML, not an AgentCard
+- host: https://app.serpwow.com
+  soft_404_control:
+    path: /.well-known/security.txt
+    status: 200
+    bytes: 6372
+    note: identical 6,372-byte SPA shell returned for every probed path
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: null
+    note: SPA shell, not a document
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: null
+    note: SPA shell, not a document
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: null
+    note: SPA shell, not a document
+  - path: /.well-known/api-catalog
+    status: 200
+    file: null
+    note: SPA shell, not a document
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    note: SPA shell, not an AgentCard
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    note: SPA shell, not an AgentCard
+- host: https://docs.trajectdata.com
+  soft_404_control:
+    path: /.well-known/agent.json
+    status: 200
+    bytes: 15
+    note: returns {"status":"OK"} for any *.json path under /.well-known/ — a stub, not a document
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    file: null
+    note: 15-byte {"status":"OK"} stub, not a plugin manifest
+  - path: /.well-known/agent-card.json
+    status: 200
+    file: null
+    note: 15-byte {"status":"OK"} stub, not an AgentCard
+  - path: /.well-known/agent.json
+    status: 200
+    file: null
+    note: 15-byte {"status":"OK"} stub, not an AgentCard
+- host: https://trajectdata.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404

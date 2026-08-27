@@ -1,0 +1,199 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.trajectdata.com/serpwow/search-api/searches/common
+description: >-
+  Cross-cutting runtime semantics for the SerpWow API, read from the provider's documentation
+  and confirmed against live responses on 2026-08-27. SerpWow is a GET-oriented, query-string
+  driven read API with one write surface (Batches / Destinations) layered on top.
+auth:
+  style: api-key
+  transport: query-string
+  parameter: api_key
+  required: true
+  headers: false
+  oauth: false
+  scopes: false
+  docs: https://docs.trajectdata.com/serpwow/search-api/searches/common
+  note: >-
+    The key travels in the URL on every request, so it appears in proxy and server access logs.
+    No header-based alternative is documented.
+  cross_ref: authentication/serpwow-authentication.yml
+base_url:
+  production: https://api.serpwow.com/live
+  versioning: none
+  cross_ref: lifecycle/serpwow-lifecycle.yml
+idempotency:
+  supported: false
+  header: null
+  scope: null
+  retention: null
+  note: >-
+    No Idempotency-Key header or equivalent is documented. The dominant surface (Search) is a
+    safe GET, so idempotency is largely moot there; the Batches write operations
+    (create/update/start/stop/delete) have no replay-protection mechanism, so a retried create
+    can produce a duplicate Batch.
+pagination:
+  style: page-number
+  parameters:
+  - name: page
+    description: 1-based page number of results to return.
+  - name: max_page
+    description: >-
+      Retrieve multiple pages and concatenate them into one response. Max 5 for real-time
+      searches, max 20 when adding searches to a Batch.
+  - name: next_page_token
+    description: >-
+      Used instead of `page` for request types that implement infinite-scroll pagination, where
+      starting from an explicit page number is not possible.
+  response_fields:
+  - name: pagination
+    description: Object in the result JSON giving total pages and whether a next page exists.
+  - name: position
+    description: Position of the result on its own page.
+  - name: page
+    description: Which physical page the result came from (present when max_page is used).
+  - name: position_overall
+    description: Position of the result across all requested pages.
+  billing: >-
+    Each successfully retrieved page costs one API credit. A request with max_page=5 that yields
+    only 3 pages is charged 3 credits.
+  docs: https://docs.trajectdata.com/serpwow/wdKjorsUBhVLnAM71RIpO
+sparse_fields:
+  supported: true
+  parameters:
+  - name: include_fields
+    description: Comma-separated JSON field names to include; dot notation supported.
+  - name: exclude_fields
+    description: Comma-separated JSON field names to exclude; dot notation supported.
+  - name: fields
+    description: >-
+      Selective parsing — request only specific top-level objects in Google Web responses.
+      Shipped April 2025.
+    docs: https://docs.trajectdata.com/serpwow/E2szZRg3cpZ5Txx80S-XW
+  note: A genuine payload-shaping surface, which matters for agent context budgets.
+content_negotiation:
+  parameter: output
+  values:
+  - json
+  - html
+  - csv
+  extras:
+  - name: csv_fields
+    description: Which fields appear in csv mode.
+  - name: include_html
+    description: Include raw SERP HTML in the response (increases payload size substantially).
+  - name: hide_base64_images
+    description: Omit Base64-encoded images to reduce response size.
+  note: Format is chosen by query parameter, not by the Accept header.
+request_id_tracing:
+  header: X-Trace-ID
+  direction: response
+  cors_exposed: true
+  verified:
+    url: https://api.serpwow.com/live/search?q=test
+    fetched: '2026-08-27'
+    observed: 'x-trace-id: 71427b09-4f87-4a0a-9b30-596703f0be86'
+  note: >-
+    Present on every response and listed in Access-Control-Expose-Headers, so browser clients
+    can read it. There is no client-supplied correlation-id header documented.
+error_envelope:
+  media_type: application/json
+  shape: request_info.success (boolean) + request_info.message (string)
+  problem_json: false
+  cross_ref: errors/serpwow-error-codes.yml
+rate_limit_signaling:
+  status_on_exhaustion: 429
+  headers_observed: none
+  note: >-
+    No X-RateLimit-* or RateLimit-* headers were present on live responses probed 2026-08-27.
+    The only published numeric limit is 120 requests/minute on the Locations API. The 503
+    incident response carries a retry_after value in the JSON body rather than a Retry-After
+    header.
+  cross_ref: rate-limits/serpwow-rate-limits.yml
+security_headers_observed:
+  x-frame-options: DENY
+  x-content-type-options: nosniff
+  referrer-policy: no-referrer
+  content-security-policy: "default-src 'none'; frame-ancestors 'none'; base-uri 'none'; form-action 'none'"
+  cache-control: no-store
+  fetched: '2026-08-27'
+dry_run_mode:
+  supported: false
+  nearest_equivalent:
+    parameter: skip_on_incident
+    description: >-
+      Not a dry run — it suppresses a live call when a parsing incident is active, so an
+      automated caller fails fast rather than ingesting unstable data.
+reversibility:
+  grade: documented
+  read_only: false
+  note: >-
+    The Search, Locations and Account surfaces are read-only, so reversibility is not applicable
+    to them. The Batches and Destinations surfaces are genuine write surfaces and every create
+    has a documented inverse, but the docs state retention/expiry windows rather than a window
+    within which a reversal is possible — so this grades `documented`, not `verified`. No
+    undelete or restore operation is published for any resource.
+  surfaces:
+  - surface: Batch
+    write: Create Batch
+    write_docs: https://docs.trajectdata.com/serpwow/batches-api/batches/create
+    reversal: Delete Batch
+    reversal_docs: https://docs.trajectdata.com/serpwow/batches-api/batches/delete
+    window: null
+    window_note: >-
+      No stated window for deletion, and no restore. Separately, a Batch not started for 2
+      months is automatically deleted by the platform — an expiry, not a reversal window.
+    restorable: false
+  - surface: Batch execution
+    write: Start Batch
+    write_docs: https://docs.trajectdata.com/serpwow/batches-api/batches/start
+    reversal: Stop Batch / Stop All Batches
+    reversal_docs: https://docs.trajectdata.com/serpwow/batches-api/batches/stop
+    window: while running
+    window_note: >-
+      A running Batch can be stopped, but credits already consumed by Searches that have
+      completed are not refunded by any documented operation.
+    restorable: false
+  - surface: Searches within a Batch
+    write: Create Searches
+    write_docs: https://docs.trajectdata.com/serpwow/batches-api/searches/create
+    reversal: Delete Search / Clear Searches
+    reversal_docs: https://docs.trajectdata.com/serpwow/batches-api/searches/clear
+    window: null
+    restorable: false
+  - surface: Destination
+    write: Create Destination
+    write_docs: https://docs.trajectdata.com/serpwow/destinations-api/create
+    reversal: Delete Destination
+    reversal_docs: https://docs.trajectdata.com/serpwow/destinations-api/delete
+    window: null
+    restorable: false
+  - surface: Result Set
+    write: generated by a Batch run
+    reversal: none
+    window: null
+    window_note: >-
+      Result Sets are not deletable via a documented operation; they expire automatically after
+      14 days.
+  - surface: Webhook notification
+    write: batch_resultset_completed POST
+    reversal: none — but re-delivery is supported
+    reversal_docs: https://docs.trajectdata.com/serpwow/batches-api/results/resend-webhook
+    window: null
+  financial_reversal:
+    refund_operation: null
+    note: >-
+      No refund, void or credit-reversal operation exists in the API. The only published
+      billing guarantee is that requests which do not return HTTP 200 are not charged.
+consistency:
+  caching: none
+  note: >-
+    Real-time searches are explicitly uncached — "every search request fetches fresh, current
+    data directly from Google". Batches are the asynchronous alternative.
+  docs: https://docs.trajectdata.com/serpwow/vKbZjjlhty9hI-AnQrnBN
+cross_references:
+  errors: errors/serpwow-error-codes.yml
+  lifecycle: lifecycle/serpwow-lifecycle.yml
+  authentication: authentication/serpwow-authentication.yml
+  rate_limits: rate-limits/serpwow-rate-limits.yml
+  webhooks: asyncapi/serpwow-batches-webhooks.yml

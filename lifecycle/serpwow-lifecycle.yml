@@ -1,0 +1,85 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.trajectdata.com/serpwow/product-updates
+description: >-
+  SerpWow has no version identifier in its API paths — the single base URL is
+  https://api.serpwow.com/live and capability is selected by the `engine` and `search_type`
+  query parameters rather than by version. Change is communicated through a dated Product
+  Updates page and endpoint-level deprecation notices carried in the documentation titles.
+versioning:
+  scheme: unversioned
+  current: live
+  base_url: https://api.serpwow.com/live
+  docs: https://docs.trajectdata.com/serpwow/search-api/overview
+  note: >-
+    `live` is the real-time path segment, not a version. There is no /v1/, no version header and
+    no version query parameter documented.
+deprecation:
+  policy_url: null
+  sunset_header: false
+  practice: dated-in-docs
+  note: >-
+    No standalone deprecation policy page is published and no RFC 8594 Sunset/Deprecation
+    response header was observed on live responses (probed 2026-08-27). Deprecations are instead
+    announced in the documentation navigation with an explicit date, and in the Product Updates
+    changelog.
+  announced_deprecations:
+  - surface: Google Product (search + result)
+    stated: deprecating 10/31
+    docs: https://docs.trajectdata.com/serpwow/search-api/searches/google/product
+  - surface: Google Product Specifications (search + result)
+    stated: deprecating 10/31
+    docs: https://docs.trajectdata.com/serpwow/search-api/searches/google/product-specifications
+  - surface: Google Product Reviews (legacy)
+    stated: deprecating 10/31
+    docs: https://docs.trajectdata.com/serpwow/search-api/searches/google/product-reviews-old
+  - surface: Google Product Online Sellers (legacy)
+    stated: deprecating on 10/31
+    docs: https://docs.trajectdata.com/serpwow/search-api/searches/google/product-online-sellers-old
+  successors:
+  - replaces: Google Product
+    with: Google Product Details
+    docs: https://docs.trajectdata.com/serpwow/search-api/searches/google/product-details
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment was found on serpwow.com, trajectdata.com or the docs.
+    Premium Technical Support is a paid-plan feature (BigData tier and above) but is not
+    expressed as an SLA.
+status_page: https://serpwow.statuspage.io/
+status_page_api: https://serpwow.statuspage.io/api/v2/summary.json
+status_page_evidence:
+  fetched: '2026-08-27'
+  http_status: 200
+  page_id: d5d7y02gh5p2
+  page_name: SerpWow
+  components_observed: 12+
+  note: >-
+    A dedicated Atlassian Statuspage with per-result-type components (Google Desktop Organic,
+    Google AIO with ads_optimized, Bing Mobile Organic, Desktop Parsing, Dashboard, Website …),
+    machine-readable at /api/v2/summary.json.
+runtime_incident_signals:
+- signal: HTTP 503 with a retry_after body
+  description: Returned while a parsing incident is active for the requested result type.
+- signal: skip_on_incident request parameter
+  description: Opt out of being served data during an active parsing incident.
+- signal: Account API status[] array
+  description: >-
+    GET /live/account returns a `status` array of component/status pairs, so incident state is
+    readable in-band without polling the status page.
+  docs: https://docs.trajectdata.com/serpwow/account-api
+data_retention:
+- resource: Batch Result Set
+  window: 14 days
+  note: Result Sets are available for download for 14 days.
+- resource: Batch
+  window: 2 months of inactivity
+  note: Batches not started for over 2 months are automatically deleted.
+- resource: Error Log entry
+  window: 3 days
+  note: Retention timer resets on each recurrence.
+- resource: Account usage history
+  window: 3 months
+  note: The Account API returns credit usage history for the past 3 months.
+deprecated_operations: []

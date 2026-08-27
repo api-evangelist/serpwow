@@ -1,0 +1,92 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.trajectdata.com/serpwow/batches-api/batches/webhook
+description: >-
+  SerpWow publishes no AsyncAPI document and no streaming surface. It does ship one real
+  outbound event: an HTTP POST callback fired when a Batch completes and a new Result Set is
+  available. This file captures that webhook catalog verbatim from the provider's docs.
+asyncapi_spec_published: false
+asyncapi_probed:
+- url: https://api.serpwow.com/asyncapi.yaml
+  result: not served (host returns 404 for every unknown path)
+- source: https://docs.trajectdata.com/serpwow/llms.txt
+  result: no AsyncAPI, event-catalog or streaming page in the published documentation index
+transport: http-post
+delivery:
+  timeout_seconds: 5
+  retries: 5
+  backoff: exponential
+  on_exhaustion: >-
+    Email notification of the failure, rate-limited to at most one per 24 hours.
+  note: >-
+    The receiving app must ingest the POST within 5 seconds or the API terminates the request.
+configuration:
+- level: batch
+  field: notification_webhook
+  description: Webhook URL set on an individual Batch.
+- level: account
+  field: profile webhook URL
+  url: https://app.serpwow.com/profile
+  description: >-
+    Fallback used when a Batch has no notification_webhook of its own.
+payload_toggles:
+- notification_as_json
+- notification_as_jsonlines
+- notification_as_csv
+resend:
+  supported: true
+  docs: https://docs.trajectdata.com/serpwow/batches-api/results/resend-webhook
+events:
+- name: batch_resultset_completed
+  discriminator: request_info.type
+  description: >-
+    Fired when every Search in a Batch has been evaluated and a Result Set is available for
+    download.
+  docs: https://docs.trajectdata.com/serpwow/batches-api/batches/webhook
+  payload_fields:
+  - path: request_info.success
+    type: boolean
+  - path: request_info.type
+    type: string
+    const: batch_resultset_completed
+  - path: batch.id
+    type: string
+  - path: batch.name
+    type: string
+  - path: result_set.id
+    type: integer
+  - path: result_set.started_at
+    type: string
+    format: date-time
+  - path: result_set.ended_at
+    type: string
+    format: date-time
+  - path: result_set.searches_completed
+    type: integer
+  - path: result_set.searches_failed
+    type: integer
+  - path: result_set.download_links.json.pages
+    type: array
+    description: Per-page JSON download URLs on results.serpwow.com
+  - path: result_set.download_links.json.all_pages
+    type: string
+    description: Zipped all-pages JSON download URL
+  - path: result_set.download_links.csv.pages
+    type: array
+  - path: result_set.download_links.csv.all_pages
+    type: string
+  note: >-
+    Presence of the json and csv link blocks depends on which of notification_as_json,
+    notification_as_jsonlines and notification_as_csv are set on the Batch.
+alternative_delivery:
+  name: Destinations
+  docs: https://docs.trajectdata.com/serpwow/destinations-api/overview
+  description: >-
+    Instead of (or as well as) a webhook, Batch Result Sets can be pushed automatically to
+    Amazon S3, Google Cloud Storage, Microsoft Azure Blob Storage, Alibaba Cloud OSS or any
+    S3-compatible object store. Up to 50 Destinations per account.
+security:
+  signature_verification: null
+  note: >-
+    No webhook signing secret, HMAC signature header or replay-protection mechanism is
+    documented. A receiver cannot cryptographically verify that a POST came from SerpWow.

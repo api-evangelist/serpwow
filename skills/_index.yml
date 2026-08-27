@@ -1,0 +1,22 @@
+generated: '2026-08-27'
+method: generated
+source: openapi/serpwow-search-api-openapi.yml + https://docs.trajectdata.com/serpwow
+provider: SerpWow
+description: >-
+  Packaged Agent Skills for the SerpWow Search API. Every operationId referenced below is
+  verified present in openapi/serpwow-search-api-openapi.yml; the surrounding runtime rules are
+  taken from the provider's published documentation. SerpWow publishes no skills or AGENTS.md of
+  its own (searched 2026-08-27), so these are generated.
+skills:
+  - name: serpwow-serp-monitoring
+    file: serpwow-serp-monitoring.md
+    operations: [search]
+    summary: Cross-engine, location-aware keyword rank monitoring with correct pagination and incident handling.
+  - name: serpwow-local-and-place-research
+    file: serpwow-local-and-place-research.md
+    operations: [places, placeReviews]
+    summary: Google Maps place discovery and review collection, joined on the Google place data_id.
+  - name: serpwow-product-and-shopping-data
+    file: serpwow-product-and-shopping-data.md
+    operations: [shopping, product, news]
+    summary: Shopping, product and news collection, with the 10/31 product-endpoint deprecation called out.

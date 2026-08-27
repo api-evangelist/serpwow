@@ -1,0 +1,105 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.trajectdata.com/serpwow/response-codes
+docs: https://docs.trajectdata.com/serpwow/vnbPPZiK03x6VHki5WHjR
+description: >-
+  SerpWow publishes an HTTP response-code registry rather than an RFC 9457 problem-type catalog.
+  Errors are returned as a plain JSON envelope on the same media type as success responses.
+format: vendor-json
+problem_json: false
+rfc9457: false
+envelope:
+  media_type: application/json
+  shape: |
+    {
+      "request_info": {
+        "success": false,
+        "message": "Supplied api_key is not valid"
+      }
+    }
+  fields:
+  - name: request_info.success
+    type: boolean
+    description: false on any unsuccessful request
+  - name: request_info.message
+    type: string
+    description: Human-readable failure reason
+  verified:
+    url: https://api.serpwow.com/live/search?q=test
+    http_status: 401
+    fetched: '2026-08-27'
+    body: '{"request_info":{"success":false,"message":"Supplied api_key is not valid"}}'
+trace_header:
+  name: X-Trace-ID
+  exposed_via: Access-Control-Expose-Headers
+  note: >-
+    Observed on live responses 2026-08-27. Every response carries an X-Trace-ID and the API
+    explicitly exposes it to browsers via Access-Control-Expose-Headers, so a caller can quote a
+    trace id to support.
+billing_rule: >-
+  Requests that do not return HTTP 200 are not charged.
+codes:
+- status: 200
+  title: Success
+  meaning: Request processed successfully.
+  action: None.
+- status: 400
+  title: Bad Request
+  meaning: >-
+    The request is invalid. Details are in the JSON body. Most commonly caused by invalid
+    parameters or unsupported combinations of parameter values.
+  action: Correct the request parameters; do not retry unchanged.
+- status: 401
+  title: Unauthorized
+  meaning: The API key supplied with the request is not valid.
+  action: Check the api_key query parameter.
+- status: 402
+  title: Payment Required
+  meaning: >-
+    The account has run out of available credits (enable Overage or upgrade the Plan), or there
+    is a payment problem.
+  action: Top up the account balance, enable overage, or upgrade the plan.
+- status: 404
+  title: Not Found
+  meaning: >-
+    The request URL is invalid. Often a wrong path, or the wrong HTTP verb (e.g. POST where GET
+    is required).
+  action: Check the path and method.
+- status: 429
+  title: Too Many Requests
+  meaning: >-
+    A plan-level or endpoint-level rate limit was hit.
+  action: Back off and retry. See rate-limits/serpwow-rate-limits.yml.
+- status: 500
+  title: Internal Server Error
+  meaning: There was a problem processing the request.
+  action: >-
+    Retry after a delay. Real-time HTTP 500s are the only errors surfaced by the Error Logs API
+    (https://docs.trajectdata.com/serpwow/errorlogs-api/overview), retained for 3 days.
+- status: 503
+  title: Service Unavailable
+  meaning: >-
+    A parsing incident is active for the requested result type, or the request set
+    skip_on_incident and an incident was live. The body names the affected request type and a
+    retry_after value.
+  action: >-
+    Honour retry_after (example published value 3600 seconds) and check
+    https://serpwow.statuspage.io/.
+  example_body: |
+    {
+      "message": "Request type google-web is temporarily unavailable. You have not been charged for this request",
+      "retry_after": 3600
+    }
+incident_opt_out:
+  parameter: skip_on_incident
+  description: >-
+    Callers can proactively opt out of receiving data during a parsing incident, so automated
+    systems fail gracefully rather than ingest partial or unstable data.
+  source: https://docs.trajectdata.com/serpwow/response-codes
+error_logs_api:
+  docs: https://docs.trajectdata.com/serpwow/errorlogs-api/overview
+  list: https://docs.trajectdata.com/serpwow/errorlogs-api/list
+  scope: Real-time requests that returned HTTP 500. Batch requests and other status codes are excluded.
+  retention_days: 3
+  note: >-
+    Repeated identical errors increment a `count` property and reset the 3-day retention timer.

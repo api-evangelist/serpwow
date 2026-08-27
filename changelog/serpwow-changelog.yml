@@ -1,0 +1,97 @@
+generated: '2026-08-27'
+method: searched
+source: https://docs.trajectdata.com/serpwow/product-updates
+description: >-
+  SerpWow maintains a dated Product Updates page in its documentation, grouped by month, with
+  each entry labelled `New Feature` or `Enhancement` and written in a consistent
+  What's New / How It Works / What This Means for You structure. Subscription to email alerts
+  for new entries is offered from the dashboard.
+scheme: dated-monthly
+versioned_releases: false
+current_version: live
+subscribe: https://app.serpwow.com/product-updates
+entry_labels:
+- New Feature
+- Enhancement
+observed_counts:
+  new_feature: 33
+  enhancement: 35
+  months_covered: 7
+latest_entry: '2025-10'
+window:
+  from: '2025-02'
+  to: '2025-10'
+  note: >-
+    Months published on the page as fetched 2026-08-27: October, September, June, May, April,
+    March and February 2025. No entry dated after October 2025 was present.
+entries:
+- date: '2025-10'
+  type: Enhancement
+  title: Capture AI Overviews Embedded in Related Questions
+  breaking: false
+  highlights:
+  - Google Web API parses ai_overview content nested inside each related_questions (People Also Ask) block.
+  - Enabled with include_ai_overview=true; each AIO returned adds 1 credit to the query cost.
+- date: '2025-09'
+  type: Enhancement
+  title: Access Related Categories from Google Search Results
+  breaking: false
+  highlights:
+  - New related_categories object returned on Google Web responses when present.
+- date: '2025-09'
+  type: Enhancement
+  title: Enable Ads-Optimized Search via CSV Batch Uploads
+  breaking: false
+  highlights:
+  - ads_optimized supported as a CSV column on Batch bulk uploads.
+- date: '2025-09'
+  type: New Feature
+  title: Access Store-Level Restaurant Menu Pricing via API
+  breaking: false
+  highlights:
+  - New `menuhub` engine returns real-time, store-specific menu pricing.
+  - Documented at https://docs.trajectdata.com/serpwow/search-api/searches/menu/menu-price
+- date: '2025-06'
+  type: Enhancement
+  title: More Complete Pickup & Delivery Data from Google — Now with Fee Info and Mobile Support
+  breaking: false
+  highlights:
+  - order_online=true responses expanded with fee information and mobile parity.
+- date: '2025-06'
+  type: Enhancement
+  title: Capture AI Overviews from All Google Domains Worldwide
+  breaking: false
+  highlights:
+  - AI Overview extraction extended to international Google domains.
+- date: '2025-05'
+  type: Enhancement
+  title: Improved Google Shopping Structure + Knowledge Graph IDs in Places
+  breaking: false
+- date: '2025-05'
+  type: Enhancement
+  title: Expanded Google SERP Coverage — Menu Highlights, Refine Products and more
+  breaking: false
+- date: '2025-05'
+  type: New Feature
+  title: Save More & Stay Covered With Two New Billing Features
+  breaking: false
+- date: '2025-04'
+  type: New Feature
+  title: 'Selective Parsing: Control Which Fields Are Returned in Google Web Responses'
+  breaking: false
+  highlights:
+  - New `fields` parameter requests only specified top-level objects, reducing payload size.
+  - Works with both GET and POST requests.
+  - Documented at https://docs.trajectdata.com/serpwow/E2szZRg3cpZ5Txx80S-XW
+- date: '2025-04'
+  type: Enhancement
+  title: 'AIO Enhancements: Unlock Deeper Google AI Overview Insights'
+  breaking: false
+- date: '2025-04'
+  type: Enhancement
+  title: Improved Ad Coverage in Google SERPs
+  breaking: false
+x-note: >-
+  Entries are transcribed from the provider's own page; only the month-level date is published,
+  so no day-precision dates are asserted. The full page carries further February and March 2025
+  entries not itemised here.

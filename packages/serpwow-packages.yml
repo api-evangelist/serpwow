@@ -1,0 +1,70 @@
+generated: '2026-08-27'
+method: searched
+source: https://registry.npmjs.org/google-search-results-serpwow, https://pypi.org/pypi/google-search-results-serpwow/json,
+  https://repo.packagist.org/p2/serpwow/google-search-results.json
+description: >-
+  First-party SerpWow client libraries published to public registries under the vendor's own
+  `serpwow` namespace. All three are dormant: the newest release is 2020-09-08, and every
+  declared source repository under github.com/serpwow now returns HTTP 404 (probed 2026-08-27),
+  so the published SDKs no longer have a maintained upstream even though the API itself is live
+  and still shipping features (see changelog/serpwow-changelog.yml).
+packages:
+- language: javascript
+  registry: npm
+  name: google-search-results-serpwow
+  url: https://www.npmjs.com/package/google-search-results-serpwow
+  install: npm install google-search-results-serpwow
+  official: true
+  version: 0.0.14
+  published: '2020-09-08'
+  repository: https://github.com/serpwow/google-search-results-nodejs
+  repository_status: 404
+  note: >-
+    Latest npm release 0.0.14 (2020-09-08). Declared repository github.com/serpwow/google-search-results-nodejs
+    returned HTTP 404 on 2026-08-27 — the source is no longer published.
+- language: python
+  registry: pypi
+  name: google-search-results-serpwow
+  url: https://pypi.org/project/google-search-results-serpwow/
+  install: pip install google-search-results-serpwow
+  official: true
+  version: 1.1.11
+  published: '2020-04-17'
+  repository: https://github.com/serpwow/google-search-results-python
+  repository_status: 404
+  note: >-
+    Latest PyPI release 1.1.11 (2020-04-17). Declared repository github.com/serpwow/google-search-results-python
+    returned HTTP 404 on 2026-08-27.
+- language: php
+  registry: packagist
+  name: serpwow/google-search-results
+  url: https://packagist.org/packages/serpwow/google-search-results
+  install: composer require serpwow/google-search-results
+  official: true
+  version: 0.2.5
+  published: '2020-02-15'
+  repository: https://github.com/serpwow/google-search-results-php
+  repository_status: 404
+  note: >-
+    Latest Packagist release 0.2.5 (2020-02-15). Declared repository
+    github.com/serpwow/google-search-results-php returned HTTP 404 on 2026-08-27.
+registries_probed:
+- registry: npm
+  result: 1 first-party package
+- registry: pypi
+  result: 1 first-party package
+- registry: packagist
+  result: 1 first-party package
+- registry: rubygems
+  result: none
+- registry: nuget
+  result: none
+- registry: crates.io
+  result: not probed — no Rust SDK referenced in docs or site
+x-currency:
+  newest_release: '2020-09-08'
+  api_still_shipping: true
+  finding: >-
+    Every first-party SDK predates the current API surface by roughly six years. The Batches,
+    Destinations, Error Logs and Locations APIs, plus AI Overview parsing, all shipped after the
+    last SDK release and are not covered by any published client library.

@@ -1,0 +1,54 @@
+generated: '2026-08-27'
+method: probed
+source: https://docs.trajectdata.com/serpwow/search-api/overview
+docs: https://docs.trajectdata.com/serpwow/account-api
+description: >-
+  SerpWow publishes a working demo API key. Every code sample across the documentation uses
+  `api_key=demo`, and the key really authenticates against the live production host — it is not
+  a placeholder. Verified 2026-08-27 by calling the Account API anonymously with it.
+mode:
+  style: shared-demo-key
+  separate_sandbox_host: false
+  note: >-
+    There is no separate sandbox host or test/live key-prefix scheme. The demo key runs against
+    the same production base URL, https://api.serpwow.com/live, and returns fixture account data.
+test_credentials:
+- name: demo
+  parameter: api_key
+  value: demo
+  published_at: https://docs.trajectdata.com/serpwow/search-api/overview
+  verified:
+    url: https://api.serpwow.com/live/account?api_key=demo
+    http_status: 200
+    fetched: '2026-08-27'
+    observed: >-
+      Returns a fixture account payload (name "John Smith", email john.smith@example.com,
+      plan "Plan Name", credits_limit 15000, credits_reset_at 2020-01-01) rather than a real
+      account — confirming it is an intentionally published demo identity.
+  note: >-
+    The same key against the Search API (https://api.serpwow.com/live/search?api_key=demo&q=pizza)
+    returned HTTP 500 with "SerpWow was unable to fulfil your request at this time ... (G)" on
+    2026-08-27 — it passes authentication (an invalid key returns HTTP 401) but the live search
+    did not complete on that attempt.
+free_evaluation:
+  free_trial: true
+  source: https://trajectdata.com/serp/serp-wow-api/
+  note: >-
+    The product page offers "Get Started for Free" / a free trial via https://app.serpwow.com/signup.
+    No credit-free perpetual tier is published; see plans/serpwow-plans-pricing.yml.
+no_charge_surfaces:
+- api: Account API
+  note: No charge for calls to the Account API.
+  source: https://docs.trajectdata.com/serpwow/account-api
+- api: Batches API
+  note: No charge for Batches API calls; only the searches a Batch runs are charged.
+  source: https://docs.trajectdata.com/serpwow/batches-api/overview
+- api: Locations API
+  note: No charge for Locations API calls; rate limited to 120 requests per minute.
+  source: https://docs.trajectdata.com/serpwow/locations-api/overview
+- api: All
+  note: >-
+    "You won't be charged for any request that does not return a successful (200) status code."
+  source: https://docs.trajectdata.com/serpwow/vnbPPZiK03x6VHki5WHjR
+fixtures: []
+time_simulation: null
