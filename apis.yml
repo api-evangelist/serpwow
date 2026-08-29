@@ -14,6 +14,18 @@ description: >-
   telemetry. Billing is metered in credits with published per-tier overage rates, and requests
   that do not return HTTP 200 are not charged.
 type: Index
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: paid
   onboarding: self-serve
