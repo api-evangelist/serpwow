@@ -72,6 +72,8 @@ url: >-
   https://raw.githubusercontent.com/api-evangelist/serpwow/refs/heads/main/apis.yml
 specificationVersion: '0.23'
 common:
+- type: FinOps
+  url: finops/serpwow-finops.yml
 - type: Website
   url: https://serpwow.com/
 - type: DeveloperPortal
