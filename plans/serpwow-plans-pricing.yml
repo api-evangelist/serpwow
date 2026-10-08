@@ -214,3 +214,56 @@ x-evidence:
     serpwow.com serves this same page for every path; https://serpwow.com/pricing/ resolves to
     https://trajectdata.com/serp/serp-wow-api/. Monthly and annual figures were read from the
     pricing toggle's own published data table, not inferred from the discount badge.
+x-canonical:
+  generated: '2026-10-08'
+  vocabulary: all/0-working/economics/plans-canonical.yml
+  models:
+  - metered
+  units:
+  - credit
+  plans:
+  - name: Starter
+    access: paid
+    model: metered
+    model_how: derived
+    units:
+    - credit
+    - other
+    periods:
+    - month
+  - name: BigData
+    access: paid
+    model: metered
+    model_how: derived
+    units:
+    - credit
+    - other
+    periods:
+    - month
+  - name: Volume
+    access: paid
+    model: metered
+    model_how: derived
+    units:
+    - credit
+    - other
+    periods:
+    - month
+  - name: Infrastructure
+    access: paid
+    model: metered
+    model_how: derived
+    units:
+    - credit
+    - other
+    periods:
+    - month
+  - name: Infrastructure XL
+    access: paid
+    model: metered
+    model_how: derived
+    units:
+    - credit
+    - other
+    periods:
+    - month
