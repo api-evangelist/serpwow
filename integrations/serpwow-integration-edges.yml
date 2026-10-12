@@ -1,0 +1,16 @@
+generated: '2026-10-12'
+method: none
+source:
+- https://zapier.com/apps/serpwow/integrations
+- https://n8n.io/integrations/serpwow/
+- https://composio.dev/toolkits/serpwow
+- https://monid.ai/tools/serpwow
+checked:
+- https://composio.dev/toolkits/serpwow
+- https://monid.ai/tools/serpwow
+- https://n8n.io/integrations/serpwow/
+- https://zapier.com/apps/serpwow/integrations
+summary: null
+marketplace_apps: []
+edges: []
+templates: []
