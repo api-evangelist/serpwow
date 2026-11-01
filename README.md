@@ -1,4 +1,4 @@
-# SerpWow (serpwow)
+# SerpWow
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,40 +64,147 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-SerpWow accurately returns all data on the Google Trends page including Related Topics (topics that were searched by other users, when searching for the specified search query) and Related Queries (other search phrases that were searched by users that have also searched for the specified search query).
+SerpWow is a real-time SERP (search engine results page) API from Traject Data. A single GET request to https://api.serpwow.com/live returns clean, structured JSON, HTML or CSV results from Google, Bing, Yahoo, Baidu, Yandex, Naver, Amazon or eBay, with fine-grained control over location (down to ZIP/postal code), device (desktop, tablet, mobile), language, country and result type — organic search, Maps places and reviews, Shopping, Product, News, Images, Videos, Scholar, Trends, Autocomplete, Reverse Image and Google AI Overviews. Alongside the real-time Search API, SerpWow ships a Batches API for scheduling up to 15,000 searches at a time with webhook or object-storage delivery, a free Locations API, a Destinations API that pushes result sets to S3, Google Cloud Storage, Azure Blob or any S3-compatible store, an Error Logs API, and an Account API for credit and platform-status telemetry. Billing is metered in credits with published per-tier overage rates, and requests that do not return HTTP 200 are not charged.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/serpwow/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/serpwow/refs/heads/main/apis.yml)
+**Areas:** Search · SERP · Web Data · Web Scraping · SEO · Search Engines · Google · E-Commerce · Market Intelligence · Data Extraction
 
-## Scope
+## SerpWow on APIs.io
 
-- **Type:** Index
-- **Position:** Consumer
-- **Access:** 3rd-Party
+Everything profiled for SerpWow is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/serpwow/](https://apis.io/providers/serpwow/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (2)
 
-- **Created:** 2025-01-07
-- **Modified:** 2026-03-16
+- [SerpWow](https://apis.io/apis/serpwow/serpwow/) — The SerpWow platform — a real-time SERP API covering Google, Bing, Yahoo, Baidu, Yandex, Naver, Amazon and eBay, plus a Batches API for scheduled bulk…
+- [SerpWow Search API](https://apis.io/apis/serpwow/serpwow-search-api/) — The real-time Search API from SerpWow — GET /search, /places, /shopping, /news, /product and /place_reviews against https://api.serpwow.com/live,…
 
-## APIs
+### Published properties
 
-### SerpWow
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-SerpWow accurately returns all data on the Google Trends page including Related Topics (topics that were searched by other users, when searching for the specified search query) and Related Queries (other search phrases that were searched by users that have also searched for the specified search query).
+#### AsyncAPI (1)
 
-- **Human URL:** [ https://trajectdata.com/discover-serp-wow-api/]( https://trajectdata.com/discover-serp-wow-api/)
+Event-driven and webhook contracts.
 
-#### Properties
+- [Serpwow Batches Webhooks](https://apis.io/asyncapis/serpwow/serpwow-batches-webhooks/)
 
-- [Documentation]( https://trajectdata.com/discover-serp-wow-api/)
-- [Postman Collection](collections/serpwow.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/serpwow.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### MCP servers (1)
 
-## Common Properties
+Model Context Protocol servers that expose the API to agents.
 
-- [GitHub Organization](https://github.com/serpwow)
+- [serpwow](https://apis.io/servers/serpwow/serpwow/)
 
-## Maintainers
+#### Agentic access (1)
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Serpwow Agentic Access](https://apis.io/agentic-access/serpwow/serpwow-agentic-access/)
+
+#### Collections (2)
+
+Postman and Open Collection request collections.
+
+- [SerpWow API](https://apis.io/collections/serpwow/open-serpwow/)
+- [SerpWow Search API](https://apis.io/collections/serpwow/open-serpwow-search-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Serpwow Search Api Overlay](https://apis.io/overlays/serpwow/serpwow-search-api-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Serpwow Authentication](https://apis.io/security/serpwow/serpwow-authentication/)
+- [Serpwow Domain Security](https://apis.io/security/serpwow/serpwow-domain-security/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Serpwow Plans Pricing](https://apis.io/plans/serpwow/serpwow-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Serpwow Rate Limits](https://apis.io/rate-limits/serpwow/serpwow-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Serpwow Finops](https://apis.io/finops/serpwow/serpwow-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://serpwow.com/)
+- [Documentation](https://docs.trajectdata.com/serpwow/search-api/overview)
+- [Getting started](https://docs.trajectdata.com/serpwow/search-api/getting-started/send-requests)
+- [API reference](https://docs.trajectdata.com/serpwow/search-api/searches/common)
+- [Pricing](https://trajectdata.com/serp/serp-wow-api/)
+- [Sign up](https://app.serpwow.com/signup)
+- [Support](https://trajectdata.com/contact-us/)
+- [Blog](https://trajectdata.com/blog/)
+- [Compliance](https://trajectdata.com/gdpr/)
+- [Terms of service](https://trajectdata.com/traject-data-terms-of-service/)
+- [Privacy policy](https://trajectdata.com/privacy-policy/)
+- [Status](https://serpwow.statuspage.io/)
+
+## API Evangelist rating
+
+**Kin Score 60.7** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 48.5 |
+| Contract governance | 4.5 |
+| Operational transparency | 71.1 |
+| Developer ergonomics | 75.6 |
+| Access clarity | 71.1 |
+
+**Agent readiness 33.9** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | na |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | na |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | na |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 29.4** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/serpwow/](https://apis.io/providers/serpwow/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for SerpWow: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/serpwow/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
