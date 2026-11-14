@@ -5,12 +5,21 @@ artifacts:
   agentic-access/serpwow-agentic-access.yml:
     method: generated
     evidence: declared in the artifact
+  ai-preferences/serpwow-ai-preferences.yml:
+    method: harvested
+    evidence: declared in the artifact
   asyncapi/serpwow-batches-webhooks.yml:
     method: searched
     evidence: declared in the artifact
   authentication/serpwow-authentication.yml:
     method: searched
     evidence: declared in the artifact
+  certification/observations-2026-11-11.jsonl:
+    method: unknown
+    evidence: no authorship recorded
+  certification/status.yml:
+    method: unknown
+    evidence: no authorship recorded
   changelog/serpwow-changelog.yml:
     method: searched
     evidence: declared in the artifact
@@ -26,14 +35,23 @@ artifacts:
   collections/serpwow.postman_collection.json:
     method: derived
     evidence: openapi/serpwow
+  compliance/serpwow-compliance.yml:
+    method: harvested
+    evidence: declared in the artifact
   conformance/serpwow-conformance.yml:
     method: derived
     evidence: declared in the artifact
   conventions/serpwow-conventions.yml:
     method: searched
     evidence: declared in the artifact
+  data-license/serpwow-data-license.yml:
+    method: harvested
+    evidence: declared in the artifact
   data-model/serpwow-data-model.yml:
     method: derived
+    evidence: declared in the artifact
+  eligibility/serpwow-eligibility.yml:
+    method: harvested
     evidence: declared in the artifact
   errors/serpwow-error-codes.yml:
     method: searched
@@ -53,7 +71,7 @@ artifacts:
   kin/checks-2026-10-23T222754.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
-  kin/checks-2026-11-02T082323.yml:
+  kin/checks-2026-11-06T143934.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
   kin/score-2026-09-23T000603.yml:
@@ -119,6 +137,9 @@ artifacts:
   kin/score-2026-11-02T082323.yml:
     method: generated
     evidence: Kin Score snapshot written by score.rb
+  kin/score-2026-11-06T143934.yml:
+    method: generated
+    evidence: Kin Score snapshot written by score.rb
   lifecycle/serpwow-lifecycle.yml:
     method: searched
     evidence: declared in the artifact
@@ -150,6 +171,9 @@ artifacts:
   plans/serpwow-price-estimates.yml:
     method: unknown
     evidence: no authorship recorded
+  privacy/serpwow-privacy-policy.yml:
+    method: harvested
+    evidence: declared in the artifact
   rate-limits/serpwow-rate-limits.yml:
     method: searched
     evidence: declared in the artifact
@@ -176,6 +200,9 @@ artifacts:
     evidence: declared in the artifact
   sla/serpwow-sla.yml:
     method: generated
+    evidence: declared in the artifact
+  terms/serpwow-terms-of-service.yml:
+    method: harvested
     evidence: declared in the artifact
   well-known/serpwow-well-known.yml:
     method: unknown
